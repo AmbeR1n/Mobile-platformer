@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -5,7 +6,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private int lives;
     [SerializeField] private int jumpForce;
-
+    public TMP_Text text;
     [SerializeField] private bool isGrounded;
     private bool isAlive;
     private Rigidbody2D rb;
@@ -14,6 +15,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float cooldownRespawn;
     [SerializeField] private Joystick joystick;
     [SerializeField] private Vector2 spawnPoint;
+
+    public int Lives { get => lives; set {lives = value; text.text = $"Health: {lives}";} }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -21,6 +25,7 @@ public class Player : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
         isAlive = true;
         spawnPoint = transform.position;
+        text.text = $"Health: {lives}";
     }
     void Update()
     {
@@ -40,11 +45,6 @@ public class Player : MonoBehaviour
         {
             Run();
         }
-
-        if (isAlive && isGrounded && joystick.Vertical > 0)
-        {
-            Jump();
-        }
     }
 
     void FixedUpdate()
@@ -52,9 +52,10 @@ public class Player : MonoBehaviour
         CheckGround();
     }
 
-    private void Jump()
+    public void Jump()
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        if (isAlive && isGrounded)
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -62,20 +63,20 @@ public class Player : MonoBehaviour
         Debug.Log("Player collided with: " + other.gameObject.name);
         if (other.collider.CompareTag("Enemy") && cooldownEnemy <= 0)
         {
-            lives--;
+            Lives--;
             cooldownEnemy = 5f;
             
         }
         if (other.collider.CompareTag("Border"))
         {
-            lives--;
+            Lives--;
             isAlive = false;
             sprite.enabled = false;
             cooldownRespawn = 3f;
             transform.position = spawnPoint;
         }
         
-        if (lives <= 0)
+        if (Lives <= 0)
         {
             isAlive = false;
             sprite.enabled = false;
@@ -105,7 +106,12 @@ public class Player : MonoBehaviour
     {
         isAlive = true;
         sprite.enabled = true;
-        if (lives <= 0) lives = 3;
+        if (Lives <= 0) Lives = 3;
         transform.position = spawnPoint;
+    }
+
+    public void ButtonClick()
+    {
+        Debug.Log("Button clicked");
     }
 }

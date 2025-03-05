@@ -1,0 +1,1 @@
+F:\Unity Projects\MobilePlatformer\Library\PramData\AndroidApplicationController\Cache\com.DefaultCompany.com.unity.template.mobile2D\gradle-project\unityLibrary\build\intermediates\cxx\Debug\4l1y3g5h\obj\arm64-v8a
