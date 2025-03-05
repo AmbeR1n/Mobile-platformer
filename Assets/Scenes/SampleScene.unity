@@ -4556,9 +4556,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d0959c434d18044833983d48a6cf7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 4
   lives: 3
-  jumpForce: 8
+  jumpForce: 6
   text: {fileID: 1626995799}
   isGrounded: 0
   cooldownRespawn: 0

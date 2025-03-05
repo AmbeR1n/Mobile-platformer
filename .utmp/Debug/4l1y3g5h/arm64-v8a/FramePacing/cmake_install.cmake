@@ -1,4 +1,4 @@
-# Install script for directory: F:/Unity Projects/MobilePlatformer/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.com.unity.template.mobile2D/gradle-project/unityLibrary/src/main/cpp/FramePacing
+# Install script for directory: F:/Unity Projects/MobilePlatformer/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/FramePacing
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
