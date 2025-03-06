@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private int lives;
