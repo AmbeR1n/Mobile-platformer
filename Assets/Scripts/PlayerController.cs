@@ -5,8 +5,10 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private int lives;
+    [SerializeField] private int coins;
     [SerializeField] private int jumpForce;
-    public TMP_Text text;
+    public TMP_Text livesText;
+    public TMP_Text coinsText;
     [SerializeField] private bool isGrounded;
     private bool isAlive;
     private Rigidbody2D rb;
@@ -16,7 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Joystick joystick;
     [SerializeField] private Vector2 spawnPoint;
 
-    public int Lives { get => lives; set {lives = value; text.text = $"Health: {lives}";} }
+    public int Lives { get => lives; set {lives = value; livesText.text = $"Health: {lives}";} }
+    public int Coins { get => coins; set {coins = value; coinsText.text = $"Coins: {coins}";} }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -25,7 +28,8 @@ public class PlayerController : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
         isAlive = true;
         spawnPoint = transform.position;
-        text.text = $"Health: {lives}";
+        livesText.text = $"Health: {lives}";
+        coinsText.text = $"Coins: {coins}";
     }
     void Update()
     {
@@ -44,6 +48,17 @@ public class PlayerController : MonoBehaviour
         if (isAlive && joystick.Horizontal != 0)
         {
             Run();
+        }
+
+        if (isAlive && joystick.Vertical >= 0.9f)
+        {
+            Jump();
+        }
+        if (isAlive && Lives <= 0)
+        {
+            isAlive = false;
+            sprite.enabled = false;
+            cooldownRespawn = 3f;
         }
     }
 
@@ -76,13 +91,19 @@ public class PlayerController : MonoBehaviour
             transform.position = spawnPoint;
         }
         
-        if (Lives <= 0)
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Player triggered: " + other.gameObject.name);
+        
+        if (other.GetComponent<BoxCollider2D>().CompareTag("Collectible"))
         {
-            isAlive = false;
-            sprite.enabled = false;
-            cooldownRespawn = 3f;
+            other.gameObject.SetActive(false);
+            Coins++;
         }
     }
+
     private void Run()
     {
         float moveInput = joystick.Horizontal;
