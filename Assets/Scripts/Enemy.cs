@@ -19,11 +19,17 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Vector2 point = currentPoint.position - transform.position;
-        if(currentPoint == pointA.transform) rb.linearVelocity = new Vector2(speed, 0);
-        if(currentPoint == pointB.transform) rb.linearVelocity = new Vector2(-speed, 0);
-        if(Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA)
+        if(currentPoint == pointA.transform) rb.linearVelocity = new Vector2(-speed, 0);
+        if(currentPoint == pointB.transform) rb.linearVelocity = new Vector2(speed, 0);
+        if(Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointA.transform)
+        {
             currentPoint = pointB.transform;
-        if(Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB)
+            sprite.flipX = !sprite.flipX;
+        }
+        if(Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == pointB.transform)
+        {
             currentPoint = pointA.transform;
+            sprite.flipX = !sprite.flipX;
+        }
     }
 }
