@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float cooldownRespawn;
     [SerializeField] private Joystick joystick;
     [SerializeField] private Vector2 spawnPoint;
+    [SerializeField] private GameObject projectilePrefab;
 
     public int Lives { get => lives; set {lives = value; livesText.text = $"Health: {lives}";} }
     public int Coins { get => coins; set {coins = value; coinsText.text = $"Coins: {coins}";} }
@@ -134,5 +135,15 @@ public class PlayerController : MonoBehaviour
     public void ButtonClick()
     {
         Debug.Log("Button clicked");
+    }
+
+    public void FireBullet()
+    {
+        var rot = transform.rotation;
+        rot.y = 180 * (sprite.flipX ? 1 : 0);
+        var pos = transform.position;
+        pos.y += 0.5f;
+        pos.x += (sprite.flipX ? -1: 1) * 0.5f;
+        Instantiate(projectilePrefab, pos, rot);
     }
 }
