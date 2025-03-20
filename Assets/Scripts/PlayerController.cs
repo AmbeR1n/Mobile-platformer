@@ -20,11 +20,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject projectilePrefab;
 
     public int Lives { get => lives; set {lives = value; livesText.text = $"Health: {lives}";} }
-    public int Coins { get => coins; set {coins = value; coinsText.text = $"Coins: {coins}";} }
+    public int Coins { get => coins; set {PlayerPrefs.SetInt("coins", value); coins = value; coinsText.text = $"Coins: {coins}";} }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        Coins = PlayerPrefs.GetInt("coins", 0);
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         isAlive = true;
