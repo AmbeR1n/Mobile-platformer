@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
             Run();
         }
 
-        if (isAlive && joystick.Vertical >= 0.9f)
+        if (isAlive && joystick.Vertical >= 0.8f)
         {
             Jump();
         }
@@ -146,5 +146,10 @@ public class PlayerController : MonoBehaviour
         pos.y += 0.5f;
         pos.x += (sprite.flipX ? -1: 1) * 0.5f;
         Instantiate(projectilePrefab, pos, rot);
+    }
+
+    public void SceneToMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 }
